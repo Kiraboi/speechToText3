@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sound Recording</title>
+        <script src="p5.js"></script>
+        <script src="p5.sound.js"></script>
+    </head>
+
+    <body style="text-align:center">
+        <div id="a"></div>
+    <!--     <script>
+            var mic, recorder, soundFile;
+
+            /* Mousepress will increment from Record, to Stop, to Play */
+            var state = 0;
+
+            function setup(){
+                createCanvas(500,50);
+                background(255);
+                fill(0);
+                document.getElementById("a").innerHTML = '<h1>Enable mic and click mouse to begin Recording</h1>';
+
+                /* Create an Audio in */
+                mic = new p5.AudioIn();
+                mic.start();
+                recorder = new p5.SoundRecorder();
+                recorder.setInput(mic);
+                soundFile = new p5.soundFile();
+            }
+
+            function mousePressed(){
+                if(state == 0 && mic.enabled){
+                    recorder.record(soundFile);
+                    document.getElementById("a").innerHTML = '<h1>Recording now | Click to Stop</h1>';
+                    state++;
+                }
+
+                else if(state == 1){
+                    recorder.stop;
+                    document.getElementById("a").innerHTML = '<h1>Recording stopped | Click to Play & Save</h1>';
+                    state++;
+					
+                }
+
+                else if(state == 2){
+					window.alert(state);
+                    soundFile.Play();
+                    saveSound(soundFile, 'sound.mp3');
+                    state++;
+                }
+				else
+                    document.getElementById("a").innerHTML = '<h1>Some error Occured</h1>';
+				
+            }
+        </script> -->
+        <script type="text/javascript">
+            var mic, recorder, soundFile;
+            var state = 0; // mousePress will increment from Record, to Stop, to Play
+
+            function setup() {
+              createCanvas(500,50);
+              background(255);
+              fill(0);
+            document.getElementById("a").innerHTML = '<h1>Enable mic and click mouse to begin Recording</h1>';
+
+              // create an audio in
+              mic = new p5.AudioIn();
+              mic.start();
+              recorder = new p5.SoundRecorder();
+              recorder.setInput(mic);
+              soundFile = new p5.SoundFile();
+            }
+
+            function mousePressed() {
+              // use the '.enabled' boolean to make sure user enabled the mic (otherwise we'd record silence)
+              if (state === 0 && mic.enabled) {
+                recorder.record(soundFile);
+                document.getElementById("a").innerHTML = '<h1>Recording now | Click to Stop</h1>';
+                state++;
+              }
+
+              else if (state === 1) {
+                recorder.stop();
+                mic.stop();
+                document.getElementById("a").innerHTML = '<h1>Recording stopped | Click to Play & Save</h1>';
+                state++;
+              }
+
+              else if (state === 2) {
+                soundFile.play(); // play the result!
+                saveSound(soundFile, 'mySound.wav'); // save file
+                function runPyScript(soundFile){
+                var jqXHR = $.ajax({
+                    type: "POST",
+                    url: "3.py",
+                    async: false,
+                    data: { param: soundFile }
+                });                }
+
+                state++;
+              }
+              else 
+                {   //window.alert("done!");
+                    document.write("<?php  exec ('3.py');   ?>");
+                }
+            }
+                    </script>
+
+<?php
+exec ("3.py");
+?>
+    </body>
+</html>
